@@ -48,7 +48,7 @@ function makeFooter()
     </div>
     <footer id="footer">
         <hr>
-        <p>2016</p>
+        <p>hostelsystemteam, 2016</p>
     </footer>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
