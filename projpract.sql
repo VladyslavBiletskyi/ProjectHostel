@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 27 2016 г., 22:43
+-- Время создания: Май 27 2016 г., 22:58
 -- Версия сервера: 5.6.29-log
 -- Версия PHP: 5.6.19
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Comment` (
   `user` int(11) NOT NULL,
   `time` datetime NOT NULL,
   `room` int(5) NOT NULL,
-  `pre_user` int(100) DEFAULT NULL
+  `pre_comment` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -115,7 +115,7 @@ ALTER TABLE `Comment`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `user` (`user`),
   ADD KEY `room` (`room`),
-  ADD KEY `pre_user` (`pre_user`);
+  ADD KEY `pre_user` (`pre_comment`);
 
 --
 -- Индексы таблицы `Floor`
@@ -172,7 +172,7 @@ ALTER TABLE `User`
 ALTER TABLE `Comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`room`) REFERENCES `Room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`pre_user`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`pre_comment`) REFERENCES `Comment` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Room`
