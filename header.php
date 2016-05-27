@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions.php';
+require_once 'functions.php';
 echo <<<_END
   <!DOCTYPE html>
     <html lang="ru">
@@ -9,11 +9,11 @@ echo <<<_END
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta id="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>HHelper</title>
+    <title>Helper</title>
     <!-- Bootstrap -->
     <script src="js/jquery.js"></script>
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <!--    <link href="css/bootstrap-theme.css" rel="stylesheet">-->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you query the page via file:// -->
@@ -35,15 +35,15 @@ echo <<<_END
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.php">HHelper</a>
+                <a class="navbar-brand" href="/index.php">Helper</a>
             </div>
             <div class="collapse navbar-collapse" id="responsive-menu">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">О системе</a></li>
+                    <li><a href="#">Контакты</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Log in</a></li>
+                    <li><a href="#">Войти</a></li>
                 </ul>
             </div>
         </div>
