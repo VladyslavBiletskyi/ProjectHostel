@@ -56,7 +56,7 @@ function makeRoomsList()
         echo "        <div id=\"collapse".$row['ID']."\" class=\"panel-collapse collapse\">\n";
         echo '                   <div class="list-group">'."\n";
         while ($row_room = mysqli_fetch_array($res_room)) {
-            echo '<a href="'."room.php?id=".$row_room['ID'].'" class="list-group-item">Комната '. $row_room['ID']. '</a>'."\n";
+            echo '<a href="'."roomtemplate.php?id=".$row_room['ID'].'" class="list-group-item">Комната '. $row_room['ID']. '</a>'."\n";
         }
         echo "            </div>\n";
         echo "            </div>\n";
