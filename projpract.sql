@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10.10
+-- version 4.4.15.5
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1:3306
--- Generation Time: May 27, 2016 at 08:57 PM
--- Server version: 5.6.26-log
--- PHP Version: 5.6.12
+-- Хост: 127.0.0.1:3306
+-- Время создания: Май 27 2016 г., 22:43
+-- Версия сервера: 5.6.29-log
+-- Версия PHP: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,98 +14,177 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `projpract`
+-- База данных: `projpract`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comment`
+-- Структура таблицы `Admin`
 --
 
-CREATE TABLE IF NOT EXISTS `comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` text NOT NULL,
-  `child_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Admin` (
+  `login` varchar(100) NOT NULL,
+  `pass` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Comment`
+--
+
+CREATE TABLE IF NOT EXISTS `Comment` (
+  `ID` int(100) NOT NULL,
+  `text` varchar(500) NOT NULL,
+  `user` int(11) NOT NULL,
   `time` datetime NOT NULL,
-  `author_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `child_id` (`child_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `room` int(5) NOT NULL,
+  `pre_user` int(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `floor`
+-- Структура таблицы `Floor`
 --
 
-CREATE TABLE IF NOT EXISTS `floor` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `room_id` int(11) NOT NULL,
-  `plan` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `roomid` (`room_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `Floor` (
+  `ID` int(3) NOT NULL,
+  `img` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room`
+-- Структура таблицы `Moder`
 --
 
-CREATE TABLE IF NOT EXISTS `room` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `num` int(11) NOT NULL,
-  `comment_id` int(11) NOT NULL,
-  `description` text NOT NULL,
-  `photo` varchar(200) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `user_count` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `userid` (`user_id`),
-  KEY `commentid` (`comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `Moder` (
+  `login` varchar(100) NOT NULL,
   `pass` varchar(100) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Room`
+--
+
+CREATE TABLE IF NOT EXISTS `Room` (
+  `ID` int(5) NOT NULL,
+  `floor` int(3) NOT NULL,
+  `img` varchar(200) DEFAULT NULL,
+  `places` int(2) NOT NULL,
+  `info` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `User`
+--
+
+CREATE TABLE IF NOT EXISTS `User` (
+  `ID` int(100) NOT NULL,
+  `pass` varchar(100) NOT NULL,
+  `eMail` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `privileg` tinyint(4) NOT NULL DEFAULT '1',
-  `has_room` bit(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `room` int(10) NOT NULL,
+  `info` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Constraints for dumped tables
+-- Индексы сохранённых таблиц
 --
 
 --
--- Constraints for table `comment`
+-- Индексы таблицы `Admin`
 --
-ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_1` FOREIGN KEY (`child_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Admin`
+  ADD PRIMARY KEY (`login`);
 
 --
--- Constraints for table `floor`
+-- Индексы таблицы `Comment`
 --
-ALTER TABLE `floor`
-  ADD CONSTRAINT `floor_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON UPDATE CASCADE;
+ALTER TABLE `Comment`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `user` (`user`),
+  ADD KEY `room` (`room`),
+  ADD KEY `pre_user` (`pre_user`);
 
 --
--- Constraints for table `room`
+-- Индексы таблицы `Floor`
 --
-ALTER TABLE `room`
-  ADD CONSTRAINT `room_1` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `room_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE NO ACTION;
+ALTER TABLE `Floor`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Индексы таблицы `Moder`
+--
+ALTER TABLE `Moder`
+  ADD PRIMARY KEY (`login`);
+
+--
+-- Индексы таблицы `Room`
+--
+ALTER TABLE `Room`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `floor` (`floor`);
+
+--
+-- Индексы таблицы `User`
+--
+ALTER TABLE `User`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `room` (`room`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `Comment`
+--
+ALTER TABLE `Comment`
+  MODIFY `ID` int(100) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `Floor`
+--
+ALTER TABLE `Floor`
+  MODIFY `ID` int(3) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `User`
+--
+ALTER TABLE `User`
+  MODIFY `ID` int(100) NOT NULL AUTO_INCREMENT;
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `Comment`
+--
+ALTER TABLE `Comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`room`) REFERENCES `Room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`pre_user`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `Room`
+--
+ALTER TABLE `Room`
+  ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`floor`) REFERENCES `Floor` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `User`
+--
+ALTER TABLE `User`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`room`) REFERENCES `Room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
