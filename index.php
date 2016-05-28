@@ -14,17 +14,30 @@ if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
                 $roomimg = $res->fetch_array()['img'];
 
                 makeRoomsList($floor, $room);
-                echo "</div><div class='col-md-9'><h3>Room " . $room . "</h3>";
-                echo <<<_END
+                $request = queryMysql("Select * From `Room` Where `ID` = ".$_GET['room']." AND `floor` = ".$_GET['floor']);
+                $row = mysqli_fetch_array($request);
+                echo <<<_HTML
+</div><div class="col-md-9">
+    <!-- Blog Post -->
+
+_HTML;
+                echo  "<h3>Комната ".$_GET['room']."</h3>";
+                echo <<<_HTML
     <ol class="breadcrumb">
         <li>
-            <a href="#">Floor 1</a>
+
+_HTML;
+                echo "<a href=\"index.php?floor=".$_GET['floor']."\">Этаж ".$_GET['floor']."</a>";
+                echo <<<_HTML
         </li>
         <li class="active">
-            Room 103
+_HTML;
+                echo "          Комната ".$_GET['room'];
+                echo <<<_HTML
         </li>
     </ol>
-_END;
+    <!-- Title -->
+_HTML;
                 echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $roomimg . "' alt=''><hr>";
                 echo <<<_END2
     <!-- Post Content -->
