@@ -1,9 +1,9 @@
 <?php require_once 'header.php';
 if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
     echo '<div class="col-md-3">';
+    $_GET['floor'] = isset($_GET['floor']) ? $_GET['floor'] : 1;
     if (isset($_GET['floor'])) {
         $floor = sanitizeString($_GET['floor']);
-        $_GET['room'] = isset($_GET['room'])? $_GET['room'] : 1;
         if (isset($_GET['room'])) {/* floor & room */
 
             $room = sanitizeString($_GET['room']);
