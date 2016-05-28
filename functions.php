@@ -107,13 +107,15 @@ function sendMail($to, $from, $title, $mess, $file_name)
     // Отправляем
     if(mail($to, $title, $body, $header))
     {
+        echo "<meta http-equiv = 'refresh' content = '0; url=welcome.php' />";
         echo "<script type = 'text/javascript'>alert('Получилось!')</script>";
     }
     else
     {
+        echo "<meta http-equiv = 'refresh' content = '0; url=welcome.php' />";
         echo "<script type = 'text/javascript'>alert('Ошибка отправки письма')</script>";
     };
-    echo "<meta http-equiv = 'refresh' content = '0; url=welcome.php' />";
+
 }
 /*--------------------------------------------------------------------------------------------*/
 function makeFooter()

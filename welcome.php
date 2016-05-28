@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 -->
-                <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
                 <div class="form-group">
                     <label for="pic" class="col-sm-3 control-label">Скан квитанции</label>
                     <div class="col-sm-9">
