@@ -66,7 +66,43 @@ _LIST;
     }
 
 }
+function sendMail($to, $from, $title, $mess, $file_name)
+{
+    $bound = "separator"; // Разделитель, по которому будет отделяться письмо от файла
+    $header="From: $from\n"; // От кого
+    $header.="To: $to\n"; // Кому
+    $header.="Subject: $title\r\n"; // Тема письма
+    $header.="Mime-Version: 1.0\n";
+    $header.="Content-Type: multipart/mixed; boundary=\"$bound\"";
 
+    // Записываем в переменную первую часть письма
+    $body="\n\n--$bound\n";
+    $body.="Content-type: text/html; charset=\"utf-8\"\n";
+    $body.="Content-Transfer-Encoding: quoted-printable\n\n";
+    $body.="$mess";
+
+    $file=fopen($file_name,"rb"); // Открываем отправляемый файл
+
+    // Записываем в переменную вторую часть письма
+    $body.="\n\n--$bound\n";
+    $body.="Content-Type: application/octet-stream;";
+    $body.="name=\"".basename($file_name)."\"\n";
+    $body.="Content-Transfer-Encoding:base64\n";
+    $body.="Content-Disposition:attachment\n\n";
+    $body.=base64_encode(fread($file,filesize($file_name)))."\n";
+    $body.="$bound--\n\n";
+
+    // Отправляем
+    if(mail($to, $title, $body, $header))
+    {
+        echo "<script type = 'text/javascript'>alert('Получилось!')</script>";
+    }
+    else
+    {
+        echo "<script type = 'text/javascript'>alert('Ошибка отправки письма')</script>";
+    };
+    echo "<meta http-equiv = 'refresh' content = '0; url=welcome.php' />";
+}
 /*--------------------------------------------------------------------------------------------*/
 function makeFooter()
 {
