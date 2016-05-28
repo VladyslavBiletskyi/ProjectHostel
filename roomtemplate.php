@@ -1,5 +1,6 @@
 <?php
     require_once 'header.php';
+addComment();
     echo" <div class=\"col-md-3\">";
     echo "   <div id=\"menu\">";
     makeRoomsList($_GET['floor'], $_GET['room']);
@@ -75,9 +76,12 @@ echo <<<_HTML
     <div class="well">
         <h4>Оставь свой отзыв:</h4>
 
-        <form role="form">
+        <form role="form" method="post">
+_HTML;
+echo "     <input type=\"hidden\" name=\"room\" value=".$_GET['room'].">\n";
+echo <<<_HTML
             <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" rows="3" name="text"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Отправить</button>
         </form>

@@ -163,4 +163,15 @@ _END;
 
 }
 
+function addComment()
+{
+    if (!isset($_POST['text']) || !isset($_POST['room'])) {
+        return;
+    }
+    $query = "INSERT INTO `Comment`(`text`, `user`, `time`, `room`) VALUES (\"". $_POST['text']. "\", (SELECT `Id` FROM `User` WHERE `eMail` = \"".$_SESSION['email']."\" ) ,\"".date("Y-m-d H:i:s")."\",".$_POST['room'].")";
+    queryMysql($query);
+    unset($_POST['text']);
+    unset($_POST['room']);
+}
+
 ?>
