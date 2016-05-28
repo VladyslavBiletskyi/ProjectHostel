@@ -43,7 +43,14 @@ echo <<<_END
                     <li><a href="contact.php">Контакты</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="welcome.php">Войти</a></li>
+_END;
+
+if (!isset($_SESSION['login']))
+    echo "<li><a href=\"welcome.php\">Войти</a></li>";
+else
+    echo "<li><a href=\"index.php\">Выход</a></li>\n";
+
+echo <<<_END
                 </ul>
             </div>
         </div>
