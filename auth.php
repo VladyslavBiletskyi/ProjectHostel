@@ -1,32 +1,32 @@
 <?php
 include 'functions.php';
-//первым делом - запускаем сессию
+//РїРµСЂРІС‹Рј РґРµР»РѕРј - Р·Р°РїСѓСЃРєР°РµРј СЃРµСЃСЃРёСЋ
 session_start();
 $_SESSION = array();
 
-function CheckUser($login, $password) //проверяем,существует ли такой пользователь
+function CheckUserOrAdmin($login, $password) //РїСЂРѕРІРµСЂСЏРµРј,СЃСѓС‰РµСЃС‚РІСѓРµС‚ Р»Рё С‚Р°РєРѕР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
 {
-    if($login == "" || $password == "") { return false; }
+    if($login == "" || $password == "") { "empty"; }
     $result1 = queryMysql("SELECT * FROM Admin WHERE login = '$login'");
     $result2 = queryMysql("SELECT * FROM User WHERE eMail = '$login'");
 
-    $user_data1 = mysqli_fetch_array($result1); //результат - в массив
-    $user_data2 = mysqli_fetch_array($result2); //результат - в массив
+    $user_data1 = mysqli_fetch_array($result1); //СЂРµР·СѓР»СЊС‚Р°С‚ - РІ РјР°СЃСЃРёРІ
+    $user_data2 = mysqli_fetch_array($result2); //СЂРµР·СѓР»СЊС‚Р°С‚ - РІ РјР°СЃСЃРёРІ
     if($user_data1[0] == "" && $user_data2 == "")
     {
-        return false;
+        return "empty";
     }
     if($user_data1 != "") {
         if ($user_data1["pass"] != $password) {
-            return false;
+            return "empty";
         }
-        return true;
+        return "admin";
     }
     if($user_data2 != "") {
         if ($user_data2["pass"] != $password) {
-            return false;
+            return "empty";
         }
-        return true;
+        return "user";
     }
 }
 
@@ -34,27 +34,39 @@ if( isset( $_POST["submit_btn"] ) )
 {
     $auth_login = $_POST["login"];
     $auth_pass = $_POST["password"];
-
-    if(CheckUser($auth_login, md5($auth_pass)) == true)
+    $check = CheckUserOrAdmin($auth_login, md5($auth_pass));
+    if( $check!= "empty")
     {
-        //запоминаем пользователя и пароль
-        $_SESSION["login"] = $auth_login;
-        $_SESSION["password"] = $auth_pass;
+        if($check == "admin") {    //Р·Р°РїРѕРјРёРЅР°РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рё РїР°СЂРѕР»СЊ
+            $auth_login = $_POST["login"];
+            $auth_pass = $_POST["password"];
+            $_SESSION["login"] = $auth_login;
+            $_SESSION["password"] = $auth_pass;
 
-        // перенаправляем на админскую страничку
-        header("Location: admin.php");
-        exit;
+            // РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµРј РЅР° Р°РґРјРёРЅСЃРєСѓСЋ СЃС‚СЂР°РЅРёС‡РєСѓ
+            header("Location: admin.php");
+            exit;
+        }
+        else
+        {
+            $_SESSION["email"] = $auth_login;
+            $_SESSION["password"] = $auth_pass;
+
+            // РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµРј РЅР° Р°РґРјРёРЅСЃРєСѓСЋ СЃС‚СЂР°РЅРёС‡РєСѓ
+            header("Location: index.php");
+            exit;
+        }
 
     }
     else
     {
-        echo "<script type = 'text/javascript'>alert('Неверный логин или пароль!')</script>";
-        //на главную
-        echo "<meta http-equiv = 'refresh' content = '0; ../url=welcome.php' />";
+        echo "<script type = 'text/javascript'>alert('РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ!')</script>";
+        //РЅР° РіР»Р°РІРЅСѓСЋ
+        echo "<meta http-equiv = 'refresh' content = '0; url=welcome.php' />";
     }
 
 
-    ///////Нужно было для внесения данных в базу
+    ///////РќСѓР¶РЅРѕ Р±С‹Р»Рѕ РґР»СЏ РІРЅРµСЃРµРЅРёСЏ РґР°РЅРЅС‹С… РІ Р±Р°Р·Сѓ
 
     /* $login = $_POST['login'];
       $password = $_POST['password'];
@@ -63,7 +75,7 @@ if( isset( $_POST["submit_btn"] ) )
           "VALUES ('$login', '$hash')");
 
 
-  //возврат на страничку
+  //РІРѕР·РІСЂР°С‚ РЅР° СЃС‚СЂР°РЅРёС‡РєСѓ
 
       header("Location: index.php");*/
 }

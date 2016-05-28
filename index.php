@@ -1,4 +1,11 @@
 <?php
+session_start();
+//защита от попытки перехода на страницу без авторизации
+if(!isset($_SESSION["email"]))
+{
+    header("Location: welcome.php");
+    exit;
+}
  include 'functions.php';
 require_once 'header.php';
 ?>
