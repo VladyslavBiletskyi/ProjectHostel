@@ -14,7 +14,7 @@
             <h4>Войти: </h4>
         </div>
         <div class="col-sm-9">
-            <form class="form-inline" role="form" method="post" action="php/login.php">
+            <form class="form-inline" role="form" method="post" action="auth.php">
                 <div class="form-group">
                     <input type="text" class="form-control" id="login" name="login" required placeholder="Ваш логин">
                 </div>
