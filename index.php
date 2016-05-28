@@ -1,6 +1,5 @@
 <?php require_once 'header.php';
-if (isset($_SESSION['login'])) {
-
+if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
     echo '<div class="col-md-3">';
     if (isset($_GET['floor'])) {
         $floor = sanitizeString($_GET['floor']);
