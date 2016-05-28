@@ -43,7 +43,7 @@ echo <<<_END
                     <li><a href="contact.php">Контакты</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Войти</a></li>
+                    <li><a href="welcome.php">Войти</a></li>
                 </ul>
             </div>
         </div>
