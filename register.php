@@ -9,17 +9,17 @@ if(isset($_POST['register']))
     $pas2 = $_POST['pas2'];
 
     if($pas != $pas2) {
-        echo "<script type = 'text/javascript'>alert('Пароли должны совпадать!')</script>";
+        echo "<script type = 'text/javascript'>alert('РџР°СЂРѕР»Рё РґРѕР»Р¶РЅС‹ СЃРѕРІРїР°РґР°С‚СЊ!')</script>";
         echo "<meta http-equiv = 'refresh' content = '0; url=admin.php' />";
         return;
     }
     $password = md5($pas2);
     queryMysql("INSERT INTO `User` (`pass`, `eMail`, `fio`) VALUES ('$password', '$email', '$fio')");
 
-    $mess = "Вас зарегистрировали в системе Hostel System. Логин: ".$email.", пароль: ".$pas2."";
+    $mess = "Р’Р°СЃ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°Р»Рё РІ СЃРёСЃС‚РµРјРµ Hostel System. Р›РѕРіРёРЅ: ".$email.", РїР°СЂРѕР»СЊ: ".$pas2."";
 
-    mail($email, "Вас зарегистрировали в системе", $mess);
-    echo "<script type = 'text/javascript'>alert('Получилось!')</script>";
+    mail($email, "Р’Р°СЃ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°Р»Рё РІ СЃРёСЃС‚РµРјРµ", $mess);
+    echo "<script type = 'text/javascript'>alert('РџРѕР»СѓС‡РёР»РѕСЃСЊ!')</script>";
     echo "<meta http-equiv = 'refresh' content = '0; url=admin.php' />";
     //header("Location: ../editing.php#add_s");
 }
