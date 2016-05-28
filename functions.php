@@ -41,31 +41,38 @@ function res($var)
     return $connection->real_escape_string($var);
 }
 
-function makeRoomsList()
+function makeRoomsList($floor, $room)
 {
-
+    echo"    <div class=\"panel-group\" id=\"accordion\">";
     $res_floor = queryMysql("Select `ID` FROM `Floor`");
-    while ($row = mysqli_fetch_array($res_floor)) {
-        echo "       <div class=\"panel panel-default\">\n";
+    while ($row_floor = mysqli_fetch_array($res_floor)) {
+        if ($row_floor['ID'] == $floor)
+            echo "       <div class=\"panel panel-active panel-default\">\n";
+        else
+            echo "       <div class=\"panel panel-default\">\n";
         echo "      <div class=\"panel-heading\">\n";
         echo "                   <h4 class=\"panel-title\">\n";
-        echo "                      <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse".$row['ID']."\">Этаж " . $row['ID']."</a>\n";
+        echo "                      <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse".$row_floor['ID']."\">Этаж " . $row_floor['ID']."</a>\n";
         echo "                   </h4>\n";
         echo "               </div>\n";
-        $res_room = queryMysql("Select `ID` From `Room` Where `floor` =" .$row['ID']);
-        echo "        <div id=\"collapse".$row['ID']."\" class=\"panel-collapse collapse\">\n";
+        $res_room = queryMysql("Select `ID` From `Room` Where `floor` =" .$row_floor['ID']);
+        if ($row_floor['ID'] == $floor)
+            echo "        <div id=\"collapse".$row_floor['ID']."\" class=\"panel-collapse collapse in\">\n";
+        else
+            echo "        <div id=\"collapse".$row_floor['ID']."\" class=\"panel-collapse collapse\">\n";
         echo '                   <div class="list-group">'."\n";
         while ($row_room = mysqli_fetch_array($res_room)) {
             echo '<a href="'."roomtemplate.php?id=".$row_room['ID'].'" class="list-group-item">Комната '. $row_room['ID']. '</a>'."\n";
         }
- echo <<<_LIST
+        echo <<<_LIST
                   </div>
             </div>
        </div>
 _LIST;
     }
-
+    echo "</div>\n";
 }
+
 function sendMail($to, $from, $title, $mess, $file_name)
 {
     $bound = "separator"; // Разделитель, по которому будет отделяться письмо от файла
