@@ -1,12 +1,5 @@
 <?php
-session_start();
-//защита от попытки перехода на страницу без авторизации
-if(!isset($_SESSION["login"]))
-{
-    header("Location: welcome.php");
-    exit;
-}
-    include 'functions.php';
+ include 'functions.php';
 require_once 'header.php';
 ?>
     <div class="col-md-3">
