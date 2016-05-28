@@ -127,7 +127,7 @@ _END2;
             $res = queryMysql($query1);
             if ($res->num_rows > 0) {
                 $floorinfo = $res->fetch_array()[0];
-                echo " <h3>έςΰζ " . $floor . "</h3><ol class='breadcrumb'><li>έςΰζ " . $floor . "</li></ol>";
+                echo " <h3>Π­Ρ‚Π°Π¶ " . $floor . "</h3><ol class='breadcrumb'><li>Π­Ρ‚Π°Π¶ " . $floor . "</li></ol>";
                 echo "<hr><!-- Preview Image -->
 <img class='img-responsive' src='".$floorinfo['img']."' alt=''><nav>";
 
