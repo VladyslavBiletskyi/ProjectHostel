@@ -39,8 +39,8 @@ echo <<<_END
             </div>
             <div class="collapse navbar-collapse" id="responsive-menu">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">О системе</a></li>
-                    <li><a href="#">Контакты</a></li>
+                    <li><a href="about.php">О системе</a></li>
+                    <li><a href="contact.php">Контакты</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Войти</a></li>
