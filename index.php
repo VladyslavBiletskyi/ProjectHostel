@@ -11,11 +11,6 @@
         <hr>
         <!-- Preview Image -->
         <img class="img-responsive" src="images\600.png" alt="">
-        <nav>
-            <ul class="pager">
-                <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>
-                <li class="next"><a href="#">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>
-            </ul>
-        </nav>
+         <?php makePager(1); ?>
     </div>
 <?php makeFooter(); ?>

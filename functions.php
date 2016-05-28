@@ -132,5 +132,40 @@ function makeFooter()
 </html>
 _END;
 }
+function makePager($floor)
+{
+    global $connection;
+    $result = $connection->query("SELECT COUNT(ID) FROM floor");
+    $max_floor=mysqli_fetch_array($result)['COUNT(ID)'];
+    if (!$result) die($connection->error);
+    echo <<<_END
+<nav>
+            <ul class="pager">
+_END;
+    //check for lower floor. If $floor is lowest - button disabled
+    if ($floor - 1 > 0) {
+        echo <<<_END
+<li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>
+_END;
+    } else {
+        echo <<<_END
+<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>
+_END;
+    }
+    //check for higher floor. If $floor is highest - button disabled
+    if ($floor + 1 <= $max_floor) {
+        echo <<<END
+<li class="next"><a href="#">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>
+END;
+    } else {
+        echo <<<END
+<li class="next disabled"><a href="#">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>
+END;
+    }
+    echo<<<_END
+</ul>
+        </nav>
+_END;
 
+}
 ?>
