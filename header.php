@@ -46,7 +46,7 @@ echo <<<_END
 _END;
 
 if (isset($_SESSION['login'])||isset($_SESSION['email']))
-    echo "<li><a href=\"index.php\">Выход</a></li>\n";
+    echo "<li><a href=\"logout.php\">Выход</a></li>\n";
 else
     echo "<li><a href=\"welcome.php\">Войти</a></li>";
 
