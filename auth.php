@@ -42,7 +42,7 @@ if( isset( $_POST["submit_btn"] ) )
         $_SESSION["password"] = $auth_pass;
 
         // перенаправл€ем на админскую страничку
-        header("Location: index.php");
+        header("Location: admin.php");
         exit;
 
     }
@@ -50,7 +50,7 @@ if( isset( $_POST["submit_btn"] ) )
     {
         echo "<script type = 'text/javascript'>alert('Ќеверный логин или пароль!')</script>";
         //на главную
-        echo "<meta http-equiv = 'refresh' content = '0; ../url=admin.php' />";
+        echo "<meta http-equiv = 'refresh' content = '0; ../url=welcome.php' />";
     }
 
 
