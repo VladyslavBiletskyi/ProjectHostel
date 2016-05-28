@@ -7,7 +7,10 @@ if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
         $floor = sanitizeString($_GET['floor']);
 
         if (isset($_GET['room'])) {/* floor & room */
-
+            if (isset($_POST['text']) && isset($_POST['room']))
+            {
+                addComment();
+            }
             $room = sanitizeString($_GET['room']);
 
             $query1 = "SELECT * FROM Room WHERE ID='$room'";
@@ -39,9 +42,11 @@ _HTML;
     <!-- Title -->
 _HTML;
                 echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $roomimg . "' alt=''><hr>";
-                echo <<<_END2
-    <!-- Post Content -->
-    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam
+echo <<<_HTML
+    <hr>
+    
+    <!-- Post Content 
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam
         sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus
         inventore?</p>
 
@@ -57,76 +62,27 @@ _HTML;
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur
         ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui,
         necessitatibus, est!</p>
-
-    <hr>
-
-    <!-- Blog Comments -->
-
+-->
+_HTML;
+                echo <<<_END2
     <!-- Comments Form -->
     <div class="well">
-        <h4>Leave a Comment:</h4>
+        <h4>Оставь свой отзыв:</h4>
 
         <form role="form" method="post">
-            <div class="form-group">
-                <textarea class="form-control" name="text" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-
-    <hr>
-
-    <!-- Posted Comments -->
-
-    <!-- Comment -->
-    <div class="media">
-        <a class="pull-left" href="#">
-            <img class="media-object" src="images\64.png" alt="">
-        </a>
-
-        <div class="media-body">
-            <h4 class="media-heading">Comment
-                <small>August 25, 2014 at 9:30 PM</small>
-            </h4>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
-            purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-            fringilla. Donec lacinia congue felis in faucibus.
-        </div>
-    </div>
-
-    <!-- Comment -->
-    <div class="media">
-        <a class="pull-left" href="#">
-            <img class="media-object" src="images\64.png" alt="">
-        </a>
-
-        <div class="media-body">
-            <h4 class="media-heading">Comment
-                <small>August 25, 2014 at 9:30 PM</small>
-            </h4>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
-            purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-            fringilla. Donec lacinia congue felis in faucibus.
-            <!-- Nested Comment -->
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="images\64.png" alt="">
-                </a>
-
-                <div class="media-body">
-                    <h4 class="media-heading">Nested comment
-                        <small>August 25, 2014 at 9:30 PM</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
-                    Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                    vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-            </div>
-            <!-- End Nested Comment -->
-        </div>
-    </div>
 _END2;
 
+                echo "     <input type=\"hidden\" name=\"room\" value=".$_GET['room'].">\n";
+                echo <<<_END2
+            <div class="form-group">
+                <textarea class="form-control" rows="3" name="text"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+    <hr>
+_END2;
+                lookComments($_GET['room']);
             } else {
                 echo "</div><div class='col-md-9'><h4>There isn't such room in the DB.</h4>";
             }
