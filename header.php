@@ -45,10 +45,10 @@ echo <<<_END
                 <ul class="nav navbar-nav navbar-right">
 _END;
 
-if (!isset($_SESSION['login']))
-    echo "<li><a href=\"welcome.php\">Войти</a></li>";
-else
+if (isset($_SESSION['login'])||isset($_SESSION['email']))
     echo "<li><a href=\"index.php\">Выход</a></li>\n";
+else
+    echo "<li><a href=\"welcome.php\">Войти</a></li>";
 
 echo <<<_END
                 </ul>
