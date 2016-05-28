@@ -58,13 +58,13 @@ function makeRoomsList()
         while ($row_room = mysqli_fetch_array($res_room)) {
             echo '<a href="'."roomtemplate.php?id=".$row_room['ID'].'" class="list-group-item">Комната '. $row_room['ID']. '</a>'."\n";
         }
-        echo "            </div>\n";
-        echo "            </div>\n";
-        echo "            </div>\n";
-    }
-    echo <<< _LIST
-
+ echo <<<_LIST
+                  </div>
+            </div>
+       </div>
 _LIST;
+    }
+
 }
 
 /*--------------------------------------------------------------------------------------------*/

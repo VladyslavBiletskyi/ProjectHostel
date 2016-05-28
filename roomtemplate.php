@@ -105,7 +105,7 @@
     <hr>
 
     <!-- Preview Image -->
-    <img class="img-responsive" src="300.png" alt="">
+    <img class="img-responsive" src="images\300.png" alt="">
 
     <hr>
 
@@ -150,7 +150,7 @@
     <!-- Comment -->
     <div class="media">
         <a class="pull-left" href="#">
-            <img class="media-object" src="64.png" alt="">
+            <img class="media-object" src="images\64.png" alt="">
         </a>
 
         <div class="media-body">
@@ -166,7 +166,7 @@
     <!-- Comment -->
     <div class="media">
         <a class="pull-left" href="#">
-            <img class="media-object" src="64.png" alt="">
+            <img class="media-object" src="images\64.png" alt="">
         </a>
 
         <div class="media-body">
@@ -179,7 +179,7 @@
             <!-- Nested Comment -->
             <div class="media">
                 <a class="pull-left" href="#">
-                    <img class="media-object" src="64.png" alt="">
+                    <img class="media-object" src="images\64.png" alt="">
                 </a>
 
                 <div class="media-body">

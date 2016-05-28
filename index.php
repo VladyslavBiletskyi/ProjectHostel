@@ -8,11 +8,9 @@
             <li>Этаж 1</li>
         </ol>
         <!-- Title -->
-
         <hr>
-
         <!-- Preview Image -->
-        <img class="img-responsive" src="600.png" alt="">
+        <img class="img-responsive" src="images\600.png" alt="">
         <nav>
             <ul class="pager">
                 <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>
