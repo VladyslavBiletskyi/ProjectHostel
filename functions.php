@@ -43,6 +43,8 @@ function res($var)
 
 function makeRoomsList($floor, $room)
 {
+    $floor = isset($floor)? $floor : 1;
+    $room = isset($room)? $room : 1;
     echo"    <div class=\"panel-group\" id=\"accordion\">";
     $res_floor = queryMysql("Select `ID` FROM `Floor`");
     while ($row_floor = mysqli_fetch_array($res_floor)) {
@@ -62,7 +64,10 @@ function makeRoomsList($floor, $room)
             echo "        <div id=\"collapse".$row_floor['ID']."\" class=\"panel-collapse collapse\">\n";
         echo '                   <div class="list-group">'."\n";
         while ($row_room = mysqli_fetch_array($res_room)) {
-            echo '<a href="'."roomtemplate.php?id=".$row_room['ID'].'" class="list-group-item">Комната '. $row_room['ID']. '</a>'."\n";
+            if ($room == $row_room['ID'])
+                echo '<a href="'."roomtemplate.php?floor=".$row_floor['ID']."&room=".$row_room['ID'].'" class="list-group-item active">Комната '. $row_room['ID']. '</a>'."\n";
+            else
+                echo '<a href="'."roomtemplate.php?floor=".$row_floor['ID']."&room=".$row_room['ID'].'" class="list-group-item">Комната '. $row_room['ID']. '</a>'."\n";
         }
         echo <<<_LIST
                   </div>

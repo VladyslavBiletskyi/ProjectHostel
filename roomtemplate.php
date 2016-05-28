@@ -1,6 +1,7 @@
 <?php require_once 'header.php'; ?>
 <div class="col-md-3">
     <div id="menu">
+        <!-- Text
         <div class="panel list-group">
             <a href="#" class="list-group-item active" data-toggle="collapse" data-target="#f1" data-parent="#menu">Floor
                 1</a>
@@ -86,7 +87,8 @@
                     <a href="#" class="list-group-item">Room 306</a>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <?php  makeRoomsList($_GET['floor'], $_GET['room'])  ?>
     </div>
 </div>
 <div class="col-md-9">
