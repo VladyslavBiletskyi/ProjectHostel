@@ -12,7 +12,7 @@ if (isset($_SESSION['login'])) {
             $query1 = "SELECT * FROM Room WHERE ID='$room'";
             $res = queryMysql($query1);
             if ($res->num_rows > 0) {
-                $roominfo = $res->fetch_array()[0];
+                $roomimg = $res->fetch_array()['img'];
 
                 makeRoomsList($floor, $room);
                 echo "</div><div class='col-md-9'><h3>Room " . $room . "</h3>";
@@ -26,8 +26,7 @@ if (isset($_SESSION['login'])) {
         </li>
     </ol>
 _END;
-                echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $roominfo['img'] .
-                    "' alt=''><hr>";
+                echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $roomimg . "' alt=''><hr>";
                 echo <<<_END2
     <!-- Post Content -->
     <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam
@@ -126,10 +125,10 @@ _END2;
             $query1 = "SELECT * FROM Floor WHERE ID='$floor'";
             $res = queryMysql($query1);
             if ($res->num_rows > 0) {
-                $floorinfo = $res->fetch_array()[0];
+                $floorimg = $res->fetch_array()['img'];
+
                 echo " <h3>Этаж " . $floor . "</h3><ol class='breadcrumb'><li>Этаж " . $floor . "</li></ol>";
-                echo "<hr><!-- Preview Image -->
-<img class='img-responsive' src='".$floorinfo['img']."' alt=''><nav>";
+                echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $floorimg . "' alt=''><nav>";
 
             } else {
                 echo "<h4>There isn't such floor in the DB.</h4>";
@@ -141,9 +140,8 @@ _END2;
         echo "<h5>Place some code here</h5>";
     }
 } else {/*not authorized*/
-    //echo '<meta http-equiv="Refresh" content="0; URL=welcome.php">';
+    echo '<meta http-equiv="Refresh" content="0; URL=welcome.php">';
     //header( 'Refresh: 0; url=welcome.php');
-    echo " <script>document.location.href=\"welcome.php\"</script>";
 }
 makeFooter();
 die();
