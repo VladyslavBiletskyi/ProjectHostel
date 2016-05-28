@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 27 2016 г., 22:43
+-- Время создания: Май 28 2016 г., 12:23
 -- Версия сервера: 5.6.29-log
 -- Версия PHP: 5.6.19
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Comment` (
   `user` int(11) NOT NULL,
   `time` datetime NOT NULL,
   `room` int(5) NOT NULL,
-  `pre_user` int(100) DEFAULT NULL
+  `pre_comment` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -55,7 +55,16 @@ CREATE TABLE IF NOT EXISTS `Comment` (
 CREATE TABLE IF NOT EXISTS `Floor` (
   `ID` int(3) NOT NULL,
   `img` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `Floor`
+--
+
+INSERT INTO `Floor` (`ID`, `img`) VALUES
+(1, NULL),
+(2, NULL),
+(3, NULL);
 
 -- --------------------------------------------------------
 
@@ -83,6 +92,24 @@ CREATE TABLE IF NOT EXISTS `Room` (
   `info` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `Room`
+--
+
+INSERT INTO `Room` (`ID`, `floor`, `img`, `places`, `info`) VALUES
+(101, 1, NULL, 2, NULL),
+(102, 1, NULL, 3, NULL),
+(103, 1, NULL, 4, NULL),
+(104, 1, NULL, 3, NULL),
+(105, 1, NULL, 3, NULL),
+(106, 1, NULL, 4, NULL),
+(201, 2, NULL, 4, NULL),
+(202, 2, NULL, 4, NULL),
+(203, 2, NULL, 2, NULL),
+(204, 2, NULL, 2, NULL),
+(205, 2, NULL, 4, NULL),
+(301, 3, NULL, 3, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -94,9 +121,17 @@ CREATE TABLE IF NOT EXISTS `User` (
   `pass` varchar(100) NOT NULL,
   `eMail` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `room` int(10) NOT NULL,
+  `room` int(10) DEFAULT NULL,
   `info` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `User`
+--
+
+INSERT INTO `User` (`ID`, `pass`, `eMail`, `name`, `room`, `info`) VALUES
+(1, 'pass1', 'newmail1@nure.ua', 'Azaza', 202, NULL),
+(2, 'pass2', 'newmail2@nure.ua', 'Петров', 102, NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -115,7 +150,7 @@ ALTER TABLE `Comment`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `user` (`user`),
   ADD KEY `room` (`room`),
-  ADD KEY `pre_user` (`pre_user`);
+  ADD KEY `pre_user` (`pre_comment`);
 
 --
 -- Индексы таблицы `Floor`
@@ -156,12 +191,12 @@ ALTER TABLE `Comment`
 -- AUTO_INCREMENT для таблицы `Floor`
 --
 ALTER TABLE `Floor`
-  MODIFY `ID` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -172,7 +207,7 @@ ALTER TABLE `User`
 ALTER TABLE `Comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`room`) REFERENCES `Room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`pre_user`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`pre_comment`) REFERENCES `Comment` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `Room`
