@@ -172,6 +172,29 @@ function addComment()
     queryMysql($query);
     unset($_POST['text']);
     unset($_POST['room']);
+    unset($_POST);
 }
 
+function lookComments($room)
+{
+    $query = "Select * From `Comment` Where `room` = " . $room;
+    $res = queryMysql($query);
+    while ($comment = mysqli_fetch_array($res)) {
+        echo <<< _COMMENT
+    <div class="media">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="images\\64.png" alt="">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">Комментарий 
+_COMMENT;
+        echo "<small>" . $comment['time'] . "</small>\n</h4>\n";
+        echo $comment['text'];
+        echo <<<_COMMENT
+        </div>
+    </div>
+_COMMENT;
+
+    }
+}
 ?>
