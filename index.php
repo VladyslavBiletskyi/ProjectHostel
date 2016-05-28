@@ -1,5 +1,5 @@
 <?php require_once 'header.php';
-if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
+if (isset($_SESSION['login']) || isset($_SESSION['email'])) {
     echo '<div class="col-md-3">';
     $_GET['floor'] = isset($_GET['floor']) ? $_GET['floor'] : 1;
     if (isset($_GET['floor'])) {
@@ -7,11 +7,29 @@ if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
         $floor = sanitizeString($_GET['floor']);
 
         if (isset($_GET['room'])) {/* floor & room */
-            if (isset($_POST['text']) && isset($_POST['room']))
-            {
-                addComment();
-            }
+
             $room = sanitizeString($_GET['room']);
+
+            if (isset($_POST['text'])) {
+
+                $_SESSION['text'] = $_POST['text'];
+                $_SESSION['room'] = $_POST['room'];
+                echo "<meta http-equiv='Refresh' content='0; URL='index.php?floor=" . $floor . "&room=" . $room . "'>";
+                makeFooter();
+                die();
+            } else if (isset($_SESSION['text'])) {
+
+                $cpost = sanitizeString($_SESSION['text']);
+                $croom = sanitizeString($_SESSION['room']);
+                $curdate = date("Y-m-d H:i:s");
+
+                $query3 = "INSERT INTO Comment(ID,text, user, time, room, pre_comment)
+                VALUES (NULL,'$cpost',(SELECT Id FROM User WHERE eMail = '" . $_SESSION['email'] . "'),'$curdate',$croom, NULL)";
+                queryMysql($query3);
+                $_POST = array();
+                unset($_SESSION['text']);
+                unset($_SESSION['room']);
+            }
 
             $query1 = "SELECT * FROM Room WHERE ID='$room'";
             $res = queryMysql($query1);
@@ -24,28 +42,13 @@ if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
     <!-- Blog Post -->
 
 _HTML;
-                echo  "<h3>Комната ".$_GET['room']."</h3>";
-                echo <<<_HTML
-    <ol class="breadcrumb">
-        <li>
-
-_HTML;
-                echo "<a href=\"index.php?floor=".$_GET['floor']."\">Этаж ".$_GET['floor']."</a>";
-                echo <<<_HTML
-        </li>
-        <li class="active">
-_HTML;
-                echo "          Комната ".$_GET['room'];
-                echo <<<_HTML
-        </li>
-    </ol>
-    <!-- Title -->
-_HTML;
+                echo "<h3>Комната " . $room . "</h3>";
+                echo "<ol class='breadcrumb'><li>
+                    <a href='index.php?floor=" . $floor . "'>Этаж " . $floor . "</a></li>
+                    <li class='active'>Комната " . $room . "</li></ol>";
                 echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $roomimg . "' alt=''><hr>";
-echo <<<_HTML
-    <hr>
-    
-    <!-- Post Content 
+                echo <<<_HTML
+    <!-- Post Content
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam
         sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus
         inventore?</p>
@@ -64,15 +67,16 @@ echo <<<_HTML
         necessitatibus, est!</p>
 -->
 _HTML;
+                lookComments($room);
                 echo <<<_END2
+                <hr>
     <!-- Comments Form -->
     <div class="well">
         <h4>Оставь свой отзыв:</h4>
 
         <form role="form" method="post">
 _END2;
-
-                echo "     <input type=\"hidden\" name=\"room\" value=".$_GET['room'].">\n";
+                echo "<input type='hidden' name='room' value=" . $room . ">";
                 echo <<<_END2
             <div class="form-group">
                 <textarea class="form-control" rows="3" name="text"></textarea>
@@ -82,7 +86,7 @@ _END2;
     </div>
     <hr>
 _END2;
-                lookComments($_GET['room']);
+
             } else {
                 echo "</div><div class='col-md-9'><h4>There isn't such room in the DB.</h4>";
             }
