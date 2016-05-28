@@ -43,31 +43,33 @@ function res($var)
 
 function makeRoomsList($floor, $room)
 {
-    $floor = isset($floor)? $floor : 1;
-    $room = isset($room)? $room : 1;
-    echo"    <div class=\"panel-group\" id=\"accordion\">";
+    $floor = isset($floor) ? $floor : 1;
+    $room = isset($room) ? $room : 1;
+    echo "<div class='panel-group' id='accordion'>";
     $res_floor = queryMysql("Select `ID` FROM `Floor`");
     while ($row_floor = mysqli_fetch_array($res_floor)) {
         if ($row_floor['ID'] == $floor)
-            echo "       <div class=\"panel panel-active panel-default\">\n";
+            echo "<div class='panel panel-active panel-default'>";
         else
-            echo "       <div class=\"panel panel-default\">\n";
-        echo "      <div class=\"panel-heading\">\n";
-        echo "                   <h4 class=\"panel-title\">\n";
-        echo "                      <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse".$row_floor['ID']."\">Этаж " . $row_floor['ID']."</a>\n";
-        echo "                   </h4>\n";
-        echo "               </div>\n";
-        $res_room = queryMysql("Select `ID` From `Room` Where `floor` =" .$row_floor['ID']);
+            echo "<div class='panel panel-default'>";
+        echo "<div class='panel-heading'>";
+        echo "<h4 class='panel-title'>";
+        echo "<a data-toggle='collapse' data-parent='#accordion' href='#collapse" . $row_floor['ID'] . "'>Этаж " . $row_floor['ID'] . "</a>";
+        echo "</h4>";
+        echo "</div>";
+        $res_room = queryMysql("Select `ID` From `Room` Where `floor` =" . $row_floor['ID']);
         if ($row_floor['ID'] == $floor)
-            echo "        <div id=\"collapse".$row_floor['ID']."\" class=\"panel-collapse collapse in\">\n";
+            echo "<div id='collapse" . $row_floor['ID'] . "' class='panel-collapse collapse in'>";
         else
-            echo "        <div id=\"collapse".$row_floor['ID']."\" class=\"panel-collapse collapse\">\n";
-        echo '                   <div class="list-group">'."\n";
+            echo "<div id='collapse" . $row_floor['ID'] . "' class='panel-collapse collapse'>";
+        echo " <div class='list-group'>";
         while ($row_room = mysqli_fetch_array($res_room)) {
             if ($room == $row_room['ID'])
-                echo '<a href="'."roomtemplate.php?floor=".$row_floor['ID']."&room=".$row_room['ID'].'" class="list-group-item active">Комната '. $row_room['ID']. '</a>'."\n";
+                echo "<a href='" . "index.php?floor=" . $row_floor['ID'] . "&room=" . $row_room['ID'] .
+                    "' class='list-group-item active'>Комната " . $row_room['ID'] . "</a>";
             else
-                echo '<a href="'."roomtemplate.php?floor=".$row_floor['ID']."&room=".$row_room['ID'].'" class="list-group-item">Комната '. $row_room['ID']. '</a>'."\n";
+                echo "<a href='" . "index.php?floor=" . $row_floor['ID'] . "&room=" . $row_room['ID'] .
+                    "' class='list-group-item'>Комната " . $row_room['ID'] . "</a>";
         }
         echo <<<_LIST
                   </div>
@@ -75,48 +77,46 @@ function makeRoomsList($floor, $room)
        </div>
 _LIST;
     }
-    echo "</div>\n";
+    echo "</div>";
 }
 
 function sendMail($to, $from, $title, $mess, $file_name)
 {
     $bound = "separator"; // Разделитель, по которому будет отделяться письмо от файла
-    $header="From: $from\n"; // От кого
-    $header.="To: $to\n"; // Кому
-    $header.="Subject: $title\r\n"; // Тема письма
-    $header.="Mime-Version: 1.0\n";
-    $header.="Content-Type: multipart/mixed; boundary=\"$bound\"";
+    $header = "From: $from\n"; // От кого
+    $header .= "To: $to\n"; // Кому
+    $header .= "Subject: $title\r\n"; // Тема письма
+    $header .= "Mime-Version: 1.0\n";
+    $header .= "Content-Type: multipart/mixed; boundary=\"$bound\"";
 
     // Записываем в переменную первую часть письма
-    $body="\n\n--$bound\n";
-    $body.="Content-type: text/html; charset=\"utf-8\"\n";
-    $body.="Content-Transfer-Encoding: quoted-printable\n\n";
-    $body.="$mess";
+    $body = "\n\n--$bound\n";
+    $body .= "Content-type: text/html; charset=\"utf-8\"\n";
+    $body .= "Content-Transfer-Encoding: quoted-printable\n\n";
+    $body .= "$mess";
 
-    $file=fopen($file_name,"rb"); // Открываем отправляемый файл
+    $file = fopen($file_name, "rb"); // Открываем отправляемый файл
 
     // Записываем в переменную вторую часть письма
-    $body.="\n\n--$bound\n";
-    $body.="Content-Type: application/octet-stream;";
-    $body.="name=\"".basename($file_name)."\"\n";
-    $body.="Content-Transfer-Encoding:base64\n";
-    $body.="Content-Disposition:attachment\n\n";
-    $body.=base64_encode(fread($file,filesize($file_name)))."\n";
-    $body.="$bound--\n\n";
+    $body .= "\n\n--$bound\n";
+    $body .= "Content-Type: application/octet-stream;";
+    $body .= "name=\"" . basename($file_name) . "\"\n";
+    $body .= "Content-Transfer-Encoding:base64\n";
+    $body .= "Content-Disposition:attachment\n\n";
+    $body .= base64_encode(fread($file, filesize($file_name))) . "\n";
+    $body .= "$bound--\n\n";
 
     // Отправляем
-    if(mail($to, $title, $body, $header))
-    {
+    if (mail($to, $title, $body, $header)) {
         echo "<meta http-equiv = 'refresh' content = '0; url=welcome.php' />";
         echo "<script type = 'text/javascript'>alert('Получилось!')</script>";
-    }
-    else
-    {
+    } else {
         echo "<meta http-equiv = 'refresh' content = '0; url=welcome.php' />";
         echo "<script type = 'text/javascript'>alert('Ошибка отправки письма')</script>";
     };
 
 }
+
 /*--------------------------------------------------------------------------------------------*/
 function makeFooter()
 {
@@ -133,11 +133,12 @@ function makeFooter()
 </html>
 _END;
 }
+
 function makePager($floor)
 {
     global $connection;
     $result = $connection->query("SELECT COUNT(ID) FROM floor");
-    $max_floor=mysqli_fetch_array($result)['COUNT(ID)'];
+    $max_floor = mysqli_fetch_array($result)['COUNT(ID)'];
     if (!$result) die($connection->error);
     echo <<<_END
 <nav>
@@ -145,20 +146,21 @@ function makePager($floor)
 _END;
     //check for lower floor. If $floor is lowest - button disabled
     if ($floor - 1 > 0) {
-        echo '<li class="previous"><a href="index.php?floor='.($floor-1).'"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>';
+        echo '<li class="previous"><a href="index.php?floor=' . ($floor - 1) . '"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>';
     } else {
         echo '<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>';
     }
     //check for higher floor. If $floor is highest - button disabled
     if ($floor + 1 <= $max_floor) {
-        echo '<li class="next"><a href="index.php?floor='.($floor+1).'">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>';
+        echo '<li class="next"><a href="index.php?floor=' . ($floor + 1) . '">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>';
     } else {
         echo '<li class="next disabled"><a href="#">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>';
     }
-    echo<<<_END
+    echo <<<_END
 </ul>
         </nav>
 _END;
 
 }
+
 ?>
