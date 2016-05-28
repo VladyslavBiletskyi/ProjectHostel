@@ -1,5 +1,5 @@
 <?php require_once 'header.php';
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['login'])) {
 
     echo '<div class="col-md-3">';
     if (isset($_GET['floor'])) {
@@ -137,78 +137,13 @@ _END2;
         }
         makePager($floor);
         echo "</nav></div>";
-    } else {
-
+    } else {/*just index without any GET*/
+        echo "<h5>Place some code here</h5>";
     }
-} else {
-    echo <<<_END2
-<div class="row">
-        <div class="col-sm-2">
-            <h4>Заявка на регистрацию</h4>
-        </div>
-        <div class="col-sm-10">
-            <form class="form-horizontal" role="form" method="post" action="sendRequest.php"  enctype='multipart/form-data'>
-                <!--<div class="form-group">
-                    <label for="login" class="col-sm-3 control-label">Ваш логин</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text"
-                               required placeholder="Логин"
-                               id="login" name="login">
-                    </div>
-                </div>-->
-                <div class="form-group">
-                    <label for="fio" class="col-sm-3 control-label">Вашe ФИО</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="text"
-                               required placeholder="Фамильева Имя Отчествовна"
-                               id="fio" name="fio">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phone" class="col-sm-3 control-label">E-mail</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="email"
-                               required placeholder="E-mail"
-                               id="email" name="email">
-                    </div>
-                </div>
-                <!--<div class="form-group">
-                    <label for="pas" class="col-sm-3 control-label">Пароль</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="password"
-                               required placeholder="Пароль"
-                               id="pas" name="pas">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="pas2" class="col-sm-3 control-label">Повторите</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="password"
-                               required placeholder="Пароль еще раз"
-                               id="pas2" name="pas2">
-                    </div>
-                </div>
-                -->
-                <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-                <div class="form-group">
-                    <label for="pic" class="col-sm-3 control-label">Скан квитанции</label>
-                    <div class="col-sm-9">
-                        <input type="file"
-                               required accept="image/*"
-                               id=pic" name="pic">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-success" name="sendreq"><i class="fa fa-share"></i> Отправить заявку</button>
-                        <button type="reset" class="btn btn-warning"><i class="fa fa-eraser"></i> Очистить</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-_END2;
-
+} else {/*not authorized*/
+    //echo '<meta http-equiv="Refresh" content="0; URL=welcome.php">';
+    //header( 'Refresh: 0; url=welcome.php');
+    echo " <script>document.location.href=\"welcome.php\"</script>";
 }
 makeFooter();
 die();
