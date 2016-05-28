@@ -2,10 +2,10 @@
 -- version 4.0.10.10
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1:3306
--- Generation Time: May 28, 2016 at 05:37 PM
--- Server version: 5.6.26-log
--- PHP Version: 5.6.12
+-- Хост: 127.0.0.1:3306
+-- Время создания: Май 29 2016 г., 02:02
+-- Версия сервера: 5.6.26-log
+-- Версия PHP: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `projpract`
+-- База данных: `projpract`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Admin`
+-- Структура таблицы `Admin`
 --
 
 CREATE TABLE IF NOT EXISTS `Admin` (
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `Admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `Admin`
+-- Дамп данных таблицы `Admin`
 --
 
 INSERT INTO `Admin` (`login`, `pass`) VALUES
@@ -42,7 +42,7 @@ INSERT INTO `Admin` (`login`, `pass`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Comment`
+-- Структура таблицы `Comment`
 --
 
 CREATE TABLE IF NOT EXISTS `Comment` (
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `Comment` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Floor`
+-- Структура таблицы `Floor`
 --
 
 CREATE TABLE IF NOT EXISTS `Floor` (
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `Floor` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `Floor`
+-- Дамп данных таблицы `Floor`
 --
 
 INSERT INTO `Floor` (`ID`, `img`) VALUES
@@ -82,7 +82,7 @@ INSERT INTO `Floor` (`ID`, `img`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Moder`
+-- Структура таблицы `Moder`
 --
 
 CREATE TABLE IF NOT EXISTS `Moder` (
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `Moder` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Room`
+-- Структура таблицы `Room`
 --
 
 CREATE TABLE IF NOT EXISTS `Room` (
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `Room` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `Room`
+-- Дамп данных таблицы `Room`
 --
 
 INSERT INTO `Room` (`ID`, `floor`, `img`, `places`, `info`) VALUES
@@ -129,48 +129,49 @@ INSERT INTO `Room` (`ID`, `floor`, `img`, `places`, `info`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `User`
+-- Структура таблицы `User`
 --
 
 CREATE TABLE IF NOT EXISTS `User` (
   `ID` int(100) NOT NULL AUTO_INCREMENT,
   `pass` varchar(100) NOT NULL,
   `eMail` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `fio` varchar(100) NOT NULL,
   `room` int(10) DEFAULT NULL,
   `info` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `room` (`room`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `User`
+-- Дамп данных таблицы `User`
 --
 
-INSERT INTO `User` (`ID`, `pass`, `eMail`, `name`, `room`, `info`) VALUES
+INSERT INTO `User` (`ID`, `pass`, `eMail`, `fio`, `room`, `info`) VALUES
 (1, '1d5afc15d99fe43fb602b25f3b5d2ee0', 'newmail1@nure.ua', 'Azaza', 202, NULL),
-(2, 'pass2', 'newmail2@nure.ua', 'Петров', 102, NULL);
+(2, 'pass2', 'newmail2@nure.ua', 'Петров', 102, NULL),
+(4, 'cfb68f0b73eb938c018b48a03e061aa7', 'tetiana.chursina@nure.ua', 'Чурсина Татьяна Сергеевна', NULL, NULL);
 
 --
--- Constraints for dumped tables
+-- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- Constraints for table `Comment`
+-- Ограничения внешнего ключа таблицы `Comment`
 --
 ALTER TABLE `Comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`room`) REFERENCES `Room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`pre_comment`) REFERENCES `Comment` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Room`
+-- Ограничения внешнего ключа таблицы `Room`
 --
 ALTER TABLE `Room`
   ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`floor`) REFERENCES `Floor` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `User`
+-- Ограничения внешнего ключа таблицы `User`
 --
 ALTER TABLE `User`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`room`) REFERENCES `Room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
