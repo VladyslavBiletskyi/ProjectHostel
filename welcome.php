@@ -77,7 +77,8 @@
                 <div class="form-group">
                     <label for="pic" class="col-sm-3 control-label">Скан квитанции</label>
                     <div class="col-sm-9">
-                        <input type="file"
+                        <input type="file" class="filestyle" data-placeholder="Файл не выбран" data-icon="false"
+                               data-buttonBefore="true" data-buttonText="Выберите файл" data-buttonName="btn-primary"
                                required accept="image/*"
                                id=pic" name="pic">
                     </div>
