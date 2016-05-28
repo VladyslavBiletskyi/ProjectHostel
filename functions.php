@@ -127,9 +127,8 @@ function makeFooter()
         <p>hostelsystemteam, 2016</p>
     </footer>
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
     <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src='js/bootstrap-filestyle.js'></script>
 </body>
 </html>
 _END;
