@@ -3,7 +3,9 @@ if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
     echo '<div class="col-md-3">';
     $_GET['floor'] = isset($_GET['floor']) ? $_GET['floor'] : 1;
     if (isset($_GET['floor'])) {
+
         $floor = sanitizeString($_GET['floor']);
+
         if (isset($_GET['room'])) {/* floor & room */
 
             $room = sanitizeString($_GET['room']);
@@ -14,8 +16,6 @@ if (isset($_SESSION['login'])||isset($_SESSION['email'])) {
                 $roomimg = $res->fetch_array()['img'];
 
                 makeRoomsList($floor, $room);
-                $request = queryMysql("Select * From `Room` Where `ID` = ".$_GET['room']." AND `floor` = ".$_GET['floor']);
-                $row = mysqli_fetch_array($request);
                 echo <<<_HTML
 </div><div class="col-md-9">
     <!-- Blog Post -->
@@ -66,9 +66,9 @@ _HTML;
     <div class="well">
         <h4>Leave a Comment:</h4>
 
-        <form role="form">
+        <form role="form" method="post">
             <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" name="text" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
