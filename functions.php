@@ -145,23 +145,15 @@ function makePager($floor)
 _END;
     //check for lower floor. If $floor is lowest - button disabled
     if ($floor - 1 > 0) {
-        echo <<<_END
-<li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>
-_END;
+        echo '<li class="previous"><a href="index.php?floor='.($floor-1).'"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>';
     } else {
-        echo <<<_END
-<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>
-_END;
+        echo '<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущий этаж</a></li>';
     }
     //check for higher floor. If $floor is highest - button disabled
     if ($floor + 1 <= $max_floor) {
-        echo <<<END
-<li class="next"><a href="#">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>
-END;
+        echo '<li class="next"><a href="index.php?floor='.($floor+1).'">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>';
     } else {
-        echo <<<END
-<li class="next disabled"><a href="#">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>
-END;
+        echo '<li class="next disabled"><a href="#">Следующий этаж <span aria-hidden="true">&rarr;</span></a></li>';
     }
     echo<<<_END
 </ul>
