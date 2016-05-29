@@ -7,6 +7,8 @@ $dbpass = 'project';
 $connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 if ($connection->connect_error) die($connection->connect_error);
 
+session_start();
+
 function queryMysql($query)
 {
     global $connection;

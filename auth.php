@@ -1,12 +1,9 @@
 <?php
 include 'functions.php';
-//первым делом - запускаем сессию
-session_start();
-$_SESSION = array();
 
 function CheckUserOrAdmin($login, $password) //проверяем,существует ли такой пользователь
 {
-    if($login == "" || $password == "") { "empty"; }
+    if($login == "" || $password == "") { return "empty"; }
     $result1 = queryMysql("SELECT * FROM Admin WHERE login = '$login'");
     $result2 = queryMysql("SELECT * FROM User WHERE eMail = '$login'");
 
@@ -28,6 +25,7 @@ function CheckUserOrAdmin($login, $password) //проверяем,существ
         }
         return "user";
     }
+    return "empty";
 }
 
 if( isset( $_POST["submit_btn"] ) )

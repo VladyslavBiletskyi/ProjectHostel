@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'functions.php';
 echo <<<_END
   <!DOCTYPE html>

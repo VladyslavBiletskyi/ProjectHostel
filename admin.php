@@ -5,16 +5,14 @@
  * Date: 28.05.2016
  * Time: 14:11
  */
-session_start();
-//защита от попытки перехода на страницу без авторизации
-if(!isset($_SESSION["login"]))
-{
-    header("Location: welcome.php");
-    exit;
-}
-include 'functions.php';
 require_once 'header.php';
-?>
+//защита от попытки перехода на страницу без авторизации
+if (!isset($_SESSION["login"])) {
+    //header("Location: welcome.php");
+    echo "<meta http-equiv='Refresh' content='0; URL=welcome.php'>";
+    exit;
+} else {
+    echo <<<_ADMIN
 <div class="container">
     <hr>
     <div class="jumbotron">
@@ -75,5 +73,7 @@ require_once 'header.php';
             </div>
         </div>
     </div>
-
-<? makeFooter(); ?>
+_ADMIN;
+    makeFooter();
+}
+?>
