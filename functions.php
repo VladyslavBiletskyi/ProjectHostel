@@ -199,4 +199,9 @@ _COMMENT;
 
     }
 }
+
+function bookRoom($room,$user){
+    $query =("UPDATE User SET room=".$room."WHERE ID=".$user);
+    queryMysql($query);
+}
 ?>
