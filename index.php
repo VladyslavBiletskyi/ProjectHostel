@@ -21,12 +21,13 @@ if (isset($_SESSION['login']) || isset($_SESSION['email'])) {
             } else if (isset($_SESSION['text'])) {
 
                 $cpost = sanitizeString($_SESSION['text']);
-                $croom = sanitizeString($_SESSION['room']);
-                $curdate = date("Y-m-d H:i:s");
-
-                $query3 = "INSERT INTO Comment(ID,text, user, time, room, pre_comment)
+                if ($cpost!='') {
+                    $croom = sanitizeString($_SESSION['room']);
+                    $curdate = date("Y-m-d H:i:s");
+                    $query3 = "INSERT INTO Comment(ID,text, user, time, room, pre_comment)
                 VALUES (NULL,'$cpost',(SELECT Id FROM User WHERE eMail = '" . $_SESSION['email'] . "'),'$curdate',$croom, NULL)";
-                queryMysql($query3);
+                    queryMysql($query3);
+                }
                 $_POST = array();
                 unset($_SESSION['text']);
                 unset($_SESSION['room']);
