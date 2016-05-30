@@ -200,8 +200,12 @@ _COMMENT;
     }
 }
 
-function bookRoom($room,$user){
-    $query =("UPDATE User SET room=".$room."WHERE ID=".$user);
+function bookRoom(){
+if (isset($_SESSION["email"])&& $_SESSION["room"]==null&&isset($_POST["room"])) {
+    $query = ("UPDATE User SET room=" . $_POST["room"] . "WHERE email=" . $_SESSION["email"]);
     queryMysql($query);
+    $_SESSION["room"] = $_POST["room"];
+    unset($_POST["room"]);
+}
 }
 ?>
