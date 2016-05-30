@@ -201,11 +201,11 @@ _COMMENT;
 }
 
 function bookRoom(){
-if (isset($_SESSION["email"])&& $_SESSION["room"]==null&&isset($_POST["room"])) {
-    $query = ("UPDATE User SET room=" . $_POST["room"] . "WHERE email=" . $_SESSION["email"]);
+if (isset($_SESSION["email"])&& $_SESSION["room"]==null&&isset($_POST["book_room"])) {
+    $query = ("UPDATE User SET room=" . $_POST["book_room"] . "WHERE email=" . $_SESSION["email"]);
     queryMysql($query);
-    $_SESSION["room"] = $_POST["room"];
-    unset($_POST["room"]);
+    $_SESSION["room"] = $_POST["book_room"];
+    unset($_POST["book_room"]);
 }
 }
 ?>
