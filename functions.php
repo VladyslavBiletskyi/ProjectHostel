@@ -59,19 +59,23 @@ function makeRoomsList($floor, $room)
         echo "<a data-toggle='collapse' data-parent='#accordion' href='#collapse" . $row_floor['ID'] . "'>Этаж " . $row_floor['ID'] . "</a>";
         echo "</h4>";
         echo "</div>";
-        $res_room = queryMysql("Select `ID` From `Room` Where `floor` =" . $row_floor['ID']);
+        $res_room = queryMysql("SELECT DISTINCT `Room`.`ID`,`Room`.`places` FROM `Room`,`User` Where `floor` =" . $row_floor['ID']);
         if ($row_floor['ID'] == $floor)
             echo "<div id='collapse" . $row_floor['ID'] . "' class='panel-collapse collapse in'>";
         else
             echo "<div id='collapse" . $row_floor['ID'] . "' class='panel-collapse collapse'>";
         echo " <div class='list-group'>";
         while ($row_room = mysqli_fetch_array($res_room)) {
+            $users = queryMysql("SELECT COUNT(User.ID) AS \"count\" FROM `User` WHERE `room` = ".$row_room['ID'] );
+            $user_row = mysqli_fetch_array($users);
+
+            $free = $row_room['places'] - $user_row['count'];
             if ($room == $row_room['ID'])
                 echo "<a href='" . "index.php?floor=" . $row_floor['ID'] . "&room=" . $row_room['ID'] .
-                    "' class='list-group-item active'>Комната " . $row_room['ID'] . "</a>";
+                    "' class='list-group-item active'>Комната " . $row_room['ID']." свободных мест ".$free."</a>";
             else
                 echo "<a href='" . "index.php?floor=" . $row_floor['ID'] . "&room=" . $row_room['ID'] .
-                    "' class='list-group-item'>Комната " . $row_room['ID'] . "</a>";
+                    "' class='list-group-item'>Комната " . $row_room['ID'] ." свободных мест " .$free."</a>";
         }
         echo <<<_LIST
                   </div>
