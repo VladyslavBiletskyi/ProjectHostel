@@ -70,9 +70,11 @@ function makeRoomsList($floor, $room)
             $user_row = mysqli_fetch_array($users);
 
             $free = $row_room['places'] - $user_row['count'];
-            if ($room == $row_room['ID'])
+            if ($room == $row_room['ID']) {
                 echo "<a href='" . "index.php?floor=" . $row_floor['ID'] . "&room=" . $row_room['ID'] .
-                    "' class='list-group-item active'>Комната " . $row_room['ID']." свободных мест ".$free."</a>";
+                    "' class='list-group-item active'>Комната " . $row_room['ID'] . " свободных мест " . $free . "</a>";
+                $_POST['free_places'] = $free;
+            }
             else
                 echo "<a href='" . "index.php?floor=" . $row_floor['ID'] . "&room=" . $row_room['ID'] .
                     "' class='list-group-item'>Комната " . $row_room['ID'] ." свободных мест " .$free."</a>";

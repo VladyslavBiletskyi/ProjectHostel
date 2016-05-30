@@ -48,10 +48,10 @@ _HTML;
                 echo "<ol class='breadcrumb'><li>
                     <a href='index.php?floor=" . $floor . "'>Этаж " . $floor . "</a></li>
                     <li class='active'>Комната " . $room . "</li></ol>";
-                if (!isset($_SESSION['living_room']) && isset($_SESSION['email'])) {
+                if (!isset($_SESSION['living_room']) && isset($_SESSION['email']) && $_POST['free_places'] > 0) {
                 echo " <form role=\"form\" method=\"post\">";
                     echo "<input type=\"hidden\" name=\"book_room\" value=".$_GET['room'].">\n";
-                    echo "<button type=\"submit\" class=\"btn btn-success\">Залеситься</button>";
+                    echo "<button type=\"submit\" class=\"btn btn-success\">Заселиться</button>";
                 }
                 echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $roomimg . "' alt=''><hr>";
                 echo <<<_HTML
