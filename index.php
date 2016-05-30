@@ -1,4 +1,5 @@
 <?php require_once 'header.php';
+bookRoom();
 if (isset($_SESSION['login']) || isset($_SESSION['email'])) {
     echo '<div class="col-md-3">';
     $_GET['floor'] = isset($_GET['floor']) ? $_GET['floor'] : 1;
@@ -7,7 +8,7 @@ if (isset($_SESSION['login']) || isset($_SESSION['email'])) {
         $floor = sanitizeString($_GET['floor']);
 
         if (isset($_GET['room'])) {/* floor & room */
-
+            bookRoom();
             $room = sanitizeString($_GET['room']);
 
             if (isset($_POST['text'])) {
@@ -46,6 +47,11 @@ _HTML;
                 echo "<ol class='breadcrumb'><li>
                     <a href='index.php?floor=" . $floor . "'>Этаж " . $floor . "</a></li>
                     <li class='active'>Комната " . $room . "</li></ol>";
+                if ($_SESSION['living_room'] == null) {
+                echo " <form role=\"form\" method=\"post\">";
+                    echo "<input type=\"hidden\" name=\"book_room\" value=".$_GET['room'].">\n";
+                    echo "<button type=\"submit\" class=\"btn btn-success\">Залеситься</button>";
+                }
                 echo "<hr><!-- Preview Image --><img class='img-responsive' src='" . $roomimg . "' alt=''><hr>";
                 echo <<<_HTML
     <!-- Post Content
@@ -66,6 +72,7 @@ _HTML;
         ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui,
         necessitatibus, est!</p>
 -->
+
 _HTML;
                 lookComments($room);
                 echo <<<_END2

@@ -202,7 +202,7 @@ _COMMENT;
 
 function bookRoom(){
 if (isset($_SESSION["email"])&& $_SESSION["living_room"]==null&&isset($_POST["book_room"])) {
-    $query = ("UPDATE User SET room=" . $_POST["book_room"] . "WHERE email=" . $_SESSION["email"]);
+    $query = ("UPDATE `User` SET `room`= " . $_POST["book_room"] . " WHERE `eMail` = \"".$_SESSION['email']."\"");
     queryMysql($query);
     $_SESSION["living_room"] = $_POST["book_room"];
     unset($_POST["book_room"]);

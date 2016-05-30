@@ -49,7 +49,8 @@ if( isset( $_POST["submit_btn"] ) )
         {
             $_SESSION["email"] = $auth_login;
             $_SESSION["password"] = $auth_pass;
-
+            $room = mysqli_fetch_array(queryMysql("Select `room` From `User` WHERE  `eMail` = \"".$auth_login."\""));
+            $_SESSION["living_room"] = isset($room['room'])? $room['room'] : null;
             // перенаправляем на админскую страничку
             header("Location: index.php");
             exit;
