@@ -48,7 +48,7 @@ _HTML;
                 echo "<ol class='breadcrumb'><li>
                     <a href='index.php?floor=" . $floor . "'>Этаж " . $floor . "</a></li>
                     <li class='active'>Комната " . $room . "</li></ol>";
-                if ($_SESSION['living_room'] == null) {
+                if (!isset($_SESSION['living_room']) && isset($_SESSION['email'])) {
                 echo " <form role=\"form\" method=\"post\">";
                     echo "<input type=\"hidden\" name=\"book_room\" value=".$_GET['room'].">\n";
                     echo "<button type=\"submit\" class=\"btn btn-success\">Залеситься</button>";
